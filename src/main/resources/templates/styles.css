@@ -1,0 +1,36 @@
+body {
+    background-color: black;
+    font-family: 'Ubuntu', sans-serif;
+    color: white;
+    margin: 0px;
+}
+
+.header {
+   text-align: center;
+   line-height: 50%;
+   color: white;
+   background-color: rgb(30, 30, 30);
+   overflow: auto;
+   max-padding: 20pt;
+   min-padding: 0pt;
+   padding-top: 0pt;
+   padding-bottom: 10pt;
+   position: sticky;
+   overflow: hidden;
+   top: 0;
+}
+
+.header h1 {
+    font-size: 2cm;
+}
+.header b {
+    line-height: normal;
+    font-size: 5mm;
+}
+
+.footer {
+    background-color: rgb(30, 30, 30);
+    display: table;
+    height: 100%;
+    width: 100%
+}
