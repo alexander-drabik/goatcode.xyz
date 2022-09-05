@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: rgb(23, 23, 23);
     font-family: 'Ubuntu', sans-serif;
     color: white;
     margin: 0px;
@@ -28,9 +28,69 @@ body {
     font-size: 5mm;
 }
 
+.content {
+    padding: 20pt;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+    margin: auto;
+    text-align: justify;
+    max-width: 90ch;
+    left: center;
+
+    background-color: rgb(27, 26, 27);
+}
+
+.content p {
+    font-size: 5mm;
+    line-height: 120%;
+    color: rgb(235, 235, 235);
+}
+
+.content h2 {
+    text-align: center;
+    margin-top: 40pt;
+    margin-bottom: 0pt;
+}
+
+.content h3 {
+    margin-bottom: -15pt;
+    font-size: 6mm;
+    color: rgb(255, 221, 255);
+}
+
+.content a {
+    text-decoration: none;
+    color: rgb(255, 221, 255);
+}
+
 .footer {
     background-color: rgb(30, 30, 30);
-    display: table;
-    height: 100%;
-    width: 100%
+    font-size: 6mm;
+    position: sticky;
+    width: 100%;
+    bottom: 0;
+    padding-top: 2mm;
+    padding-bottom: 2mm;
+}
+
+.footer td {
+    text-align: center;
+    width: 33%;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+@keyframes changeColor {
+  from {color: white; font-size: 6mm;}
+  to {color: rgb(255, 221, 255); font-size: 6.5mm;}
+}
+
+.footer a:hover {
+    animation-name: changeColor;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
 }
