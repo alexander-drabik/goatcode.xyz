@@ -10,12 +10,31 @@
     <title>GoatCode</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <link rel="stylesheet" href="styles.css">
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
-    <div class = "header">
-        <h1>GOATCODE</h1>
-        <b>Programista, Wizjoner, Geniusz, Filantrop</b>
+    <div class = "header" id = "header">
+        <h1 id = "goatcode">GOATCODE</h1>
+        <b id = "text">Programista, Wizjoner, Geniusz, Filantrop</b>
     </div>
-    <p>tka</p>
+
+    <div th:replace="${subpage} :: content"></div>
+
+    <div class = "footer">
+        <table style = "width: 100%;">
+            <tr>
+                <td>
+                    <a href="kontakt">Kontakt</a>
+                </td>
+                <td>
+                    <a href="projekty">Projekty</a>
+                </td>
+                <td>
+                    <a href="filmy">Filmy</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
 </body>
 </html>
