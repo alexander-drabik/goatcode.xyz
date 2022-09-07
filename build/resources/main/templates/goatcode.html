@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <!-- Add Ubuntu Font --->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <title>GoatCode</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <link rel="stylesheet" href="styles.css">
     <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
@@ -18,8 +17,8 @@
         <b id = "text">Programista, Wizjoner, Geniusz, Filantrop</b>
     </div>
 
-    <div th:replace="${subpage} :: content"></div>
-
+    <span th:replace="${subpage} :: content"></span>
+    
     <div class = "footer">
         <table style = "width: 100%;">
             <tr>

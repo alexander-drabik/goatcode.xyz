@@ -36,6 +36,10 @@ body {
     text-align: justify;
     max-width: 90ch;
     left: center;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    flex: 1;
 
     background-color: rgb(27, 26, 27);
 }
