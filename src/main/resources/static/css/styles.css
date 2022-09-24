@@ -49,6 +49,32 @@ body {
     background-color: rgb(27, 26, 27);
 }
 
+.content img {
+    border: 5px solid rgb(40, 40, 40);
+    border-radius: 25px;
+}
+
+.content .hidden {
+    display: none;
+    margin: 0px;
+    font-size: 10mm;
+}
+
+.content img:hover {
+    border-color: rgb(70, 70, 70);
+}
+
+@keyframes show {
+    from {opacity: 0;}
+    to {opacity: 100;}
+}
+
+.content img:hover ~ .hidden {
+    display: block;
+    animation-name: show;
+    animation-duration: 1s;
+}
+
 .content p {
     font-size: 5mm;
     line-height: 120%;

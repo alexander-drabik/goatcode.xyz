@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 public class Youtube {
     public static int subscribersCount = 0;
 
-
     // Function will be called every 3 minutes
     @Scheduled(fixedDelay = 1000*60*3)
     public static void setSubscribersCount() {
