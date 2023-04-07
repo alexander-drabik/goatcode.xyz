@@ -15,6 +15,8 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.javatuples:javatuples:1.2")
+    implementation("org.apache.httpcomponents:httpclient:4.5.14")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.json:json:20220320")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

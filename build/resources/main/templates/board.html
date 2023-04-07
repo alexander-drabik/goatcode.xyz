@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Szachy dla debili granie</title>
+        <link rel="stylesheet" th:href="@{/css/board.css}" />
+        <!-- <script type="module" th:src="@{/js/eventsource.js}"></script> -->
+        <script type="module" th:src="@{/js/node_modules/event-source-polyfill/src/eventsource.js}"></script>
+        <script type="module" th:src="@{/js/bundle.js}"></script>
+    </head>
+
+    <body>
+        <div class="board">
+            <th:block th:each="i : ${#numbers.sequence(0, 63)}">
+                <div
+                    th:if="${(i+(i/8)%2)%2 == 0}"
+                    class="square square-light select-disable"
+                ></div>
+                <div
+                    th:if="${(i+(i/8)%2)%2 == 1}"
+                    class="square square-dark select-disable"
+                ></div>
+            </th:block>
+        </div>
+    </body>
+</html>

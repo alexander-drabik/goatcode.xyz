@@ -20,7 +20,6 @@ public class GoatCodeController {
         return "goatcode";
     }
 
-
     @RequestMapping("/projekty")
     public String projekty(Model model) {
         model.addAttribute("subpage", "projekty");

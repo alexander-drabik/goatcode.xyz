@@ -10,7 +10,6 @@ public class GoatErrorController implements ErrorController {
     public String handleError() {
         return "404error";
     }
-
     @Override
     public String getErrorPath() {
         return null;
