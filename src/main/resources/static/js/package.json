@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@types/event-source-polyfill": "^1.0.1",
+    "browser-resolve": "^2.0.0",
+    "event-source-polyfill": "^1.0.31"
+  },
+  "devDependencies": {
+    "esmify": "^2.1.1"
+  }
+}

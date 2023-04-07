@@ -1,3 +1,5 @@
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill'
+
 let url = window.location.search
 let code: string | null = new URLSearchParams(url).get('code')
 
@@ -6,6 +8,16 @@ let dragging = false
 let draged_piece = 0
 
 let playing_as = 'white'
+const EventSource = NativeEventSource || EventSourcePolyfill
+
+const eventSource = new EventSource('http://localhost:8080/chess/event/', {
+    headers: {
+        code: code,
+    },
+})
+eventSource.onmessage = (e) => {
+    updateBoard()
+}
 
 function idToName(id: number): string {
     let color: string = ''

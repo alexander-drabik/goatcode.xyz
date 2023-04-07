@@ -1,21 +1,28 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var websocket_ts_1 = require("websocket-ts");
-var url = window.location.search;
-var code = new URLSearchParams(url).get('code');
-var board = [0, 0, 0];
-var dragging = false;
-var draged_piece = 0;
-var playing_as = 'white';
+import { NativeEventSource, EventSourcePolyfill } from 'event-source-polyfill';
+let url = window.location.search;
+let code = new URLSearchParams(url).get('code');
+let board = [0, 0, 0];
+let dragging = false;
+let draged_piece = 0;
+let playing_as = 'white';
+const EventSource = NativeEventSource || EventSourcePolyfill;
+const eventSource = new EventSource('http://localhost:8080/chess/event/', {
+    headers: {
+        code: code,
+    },
+});
+eventSource.onmessage = (e) => {
+    updateBoard();
+};
 function idToName(id) {
-    var color = '';
+    let color = '';
     if (id < 0) {
         color = 'white';
     }
     else {
         color = 'black';
     }
-    var piece = '';
+    let piece = '';
     switch (Math.abs(id)) {
         case 1:
             piece = 'king';
@@ -44,18 +51,16 @@ function loadBoard(fun) {
         mode: 'cors',
         cache: 'no-cache',
         body: code,
-    }).then(function (response) {
-        return response.json().then(function (data) {
-            board = data['board'];
-            if (data['color']) {
-                playing_as = 'white';
-            }
-            else {
-                playing_as = 'black';
-            }
-            fun.call({});
-        });
-    });
+    }).then((response) => response.json().then((data) => {
+        board = data['board'];
+        if (data['color']) {
+            playing_as = 'white';
+        }
+        else {
+            playing_as = 'black';
+        }
+        fun.call({});
+    }));
 }
 function loadSquares() {
     fetch('http://localhost:8080/chess/board/get_squares/', {
@@ -66,12 +71,12 @@ function loadSquares() {
         headers: {
             org: draged_piece.toString(),
         },
-    }).then(function (response) {
-        response.json().then(function (data) {
-            var moves = data['squares'];
+    }).then((response) => {
+        response.json().then((data) => {
+            const moves = data['squares'];
             console.log(moves);
-            var squares = document.getElementsByClassName('square');
-            moves.forEach(function (id, index) {
+            const squares = document.getElementsByClassName('square');
+            moves.forEach((id, index) => {
                 if (id == 2 && board[index] != 0) {
                     squares[index].classList.add('possible');
                 }
@@ -80,7 +85,7 @@ function loadSquares() {
                         squares[index].classList.remove('possible');
                     }
                     if (id == 2) {
-                        var image = document.createElement('img');
+                        const image = document.createElement('img');
                         image.src = '/images/select.png';
                         image.className = 'indicator';
                         image.style.marginLeft = '-5px';
@@ -89,7 +94,7 @@ function loadSquares() {
                         console.log(image);
                     }
                     else {
-                        var indicators = squares[index].getElementsByClassName('indicator');
+                        const indicators = squares[index].getElementsByClassName('indicator');
                         if (indicators.length > 0) {
                             indicators[0].remove();
                         }
@@ -100,19 +105,19 @@ function loadSquares() {
     });
 }
 function generatePiece(id, index) {
-    var image = document.createElement('img');
+    const image = document.createElement('img');
     image.src = '/images/' + idToName(id) + '.png';
     image.draggable = false;
     image.className = 'piece select-disable';
     image.addEventListener('click', function (e) {
         if (e.target instanceof HTMLImageElement && !dragging) {
-            var id_1 = board[index];
-            if ((playing_as == 'white' && id_1 > 0) ||
-                (playing_as == 'black' && id_1 < 0)) {
+            const id = board[index];
+            if ((playing_as == 'white' && id > 0) ||
+                (playing_as == 'black' && id < 0)) {
                 return;
             }
             // Create piece following cursor
-            var piece = document.createElement('img');
+            const piece = document.createElement('img');
             piece.className = 'moving-piece select-disable';
             piece.draggable = false;
             piece.src = e.target.src;
@@ -128,16 +133,16 @@ function generatePiece(id, index) {
     return image;
 }
 function updateBoard() {
-    loadBoard(function () {
-        var squares = document.getElementsByClassName('square');
-        board.forEach(function (id, index) {
-            var square = squares[index];
-            var name = idToName(id);
+    loadBoard(() => {
+        let squares = document.getElementsByClassName('square');
+        board.forEach((id, index) => {
+            let square = squares[index];
+            const name = idToName(id);
             if (id == 0) {
                 square.innerHTML = '';
             }
             else {
-                var image = square.getElementsByClassName('piece')[0];
+                let image = square.getElementsByClassName('piece')[0];
                 if (image instanceof HTMLImageElement) {
                     image.src = 'images/' + name + '.png';
                 }
@@ -145,7 +150,7 @@ function updateBoard() {
                     square.appendChild(generatePiece(id, index));
                 }
             }
-            var indicators = square.getElementsByClassName('indicator');
+            let indicators = square.getElementsByClassName('indicator');
             if (indicators.length > 0) {
                 indicators[0].remove();
             }
@@ -153,21 +158,21 @@ function updateBoard() {
         });
     });
 }
-window.onload = function (event) {
-    loadBoard(function () {
-        board.forEach(function (id, index) {
+window.onload = (event) => {
+    loadBoard(() => {
+        board.forEach((id, index) => {
             if (id == 0)
                 return;
-            var image = generatePiece(id, index);
+            const image = generatePiece(id, index);
             document
                 .getElementsByClassName('board')[0]
                 .getElementsByClassName('square')[index].appendChild(image);
         });
     });
-    var squares = document.getElementsByClassName('square');
-    var _loop_1 = function () {
-        var square = squares[i];
-        var index = i;
+    let squares = document.getElementsByClassName('square');
+    for (var i = 0; i < 64; i++) {
+        let square = squares[i];
+        let index = i;
         square.addEventListener('click', function (e) {
             if (dragging && index != draged_piece) {
                 fetch('http://localhost:8080/chess/board/move/', {
@@ -179,38 +184,25 @@ window.onload = function (event) {
                         org: draged_piece.toString(),
                         next: index.toString(),
                     },
-                }).then(function (response) {
-                    return response.json().then(function (data) {
-                        var statusCode = data['status'];
-                        console.log(code);
-                        dragging = false;
-                        document.body
-                            .getElementsByClassName('moving-piece')[0]
-                            .remove();
-                        updateBoard();
-                    });
-                });
+                }).then((response) => response.json().then((data) => {
+                    const statusCode = data['status'];
+                    console.log(code);
+                    dragging = false;
+                    document.body
+                        .getElementsByClassName('moving-piece')[0]
+                        .remove();
+                    updateBoard();
+                }));
             }
         });
-    };
-    for (var i = 0; i < 64; i++) {
-        _loop_1();
     }
 };
-document.onmousemove = function (event) {
+document.onmousemove = (event) => {
     if (dragging) {
-        var piece = document.body.getElementsByClassName('moving-piece')[0];
+        let piece = document.body.getElementsByClassName('moving-piece')[0];
         if (piece instanceof HTMLImageElement) {
             piece.style.left = (event.clientX - 50).toString() + 'px';
             piece.style.top = (event.clientY - 50).toString() + 'px';
         }
     }
 };
-var ws = new websocket_ts_1.WebsocketBuilder('ws://localhost:42421')
-    .onOpen(function (i, ev) {
-    console.log('open');
-})
-    .onMessage(function (i, e) {
-    console.log('echo sent');
-})
-    .build();
